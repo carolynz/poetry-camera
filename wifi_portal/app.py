@@ -247,8 +247,8 @@ def submit():
 # because the user may have entered their own cell phone hotspot info while it's not active yet\
 @app.route('/save_and_connect', methods=['POST'])
 def save_and_connect():
-    manual_ssid = request.form['manual_ssid']
-    manual_password = request.form['manual_password']
+    manual_ssid = request.form['ssid']
+    manual_password = request.form['password']
     save_hotspot_config(manual_ssid, manual_password)
     
     def hotspot_scanning():

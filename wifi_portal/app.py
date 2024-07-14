@@ -9,9 +9,10 @@
 import time
 import threading
 import json
-from flask import Flask, request, render_template, jsonify, url_for
 import subprocess
 import os
+
+from flask import Flask, request, render_template, jsonify, url_for
 
 POETRY_CAMERA_DIRECTORY = os.path.dirname(
     os.path.dirname(os.path.abspath(__name__)))
@@ -55,8 +56,8 @@ def get_git_commit_date():
 commit_hash = get_git_revision_hash()
 branch_name = get_git_branch_name()
 commit_date = get_git_commit_date()
-version_info = f"System last updated: {commit_date}\nVersion: {
-    commit_hash}\nBranch: {branch_name}"
+version_info = f"""System last updated: {commit_date}\nVersion: {
+    commit_hash}\nBranch: {branch_name}"""
 
 # Save the commit hash to a file
 SOFTWARE_VERSION_FILE_PATH = POETRY_CAMERA_DIRECTORY + \

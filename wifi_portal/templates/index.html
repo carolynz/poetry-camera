@@ -119,12 +119,15 @@
         const submitButton = form.querySelector("input[type='submit']");
         submitButton.value = "Connecting...";
         submitButton.classList.add("loading");
+        const formData = new FormData(form);
 
         // if the ssid is not in the list, it's a manual connection, add manual_connect=true to the form data
         const ssidList = JSON.parse("{{ ssids_list | tojson }}");
-        const manualConnect = ssidList.includes(form.ssid.value) ? false : true;
+        formData.append(
+          "manual_connect",
+          ssidList.includes(form.ssid.value) ? false : true
+        );
 
-        const formData = new FormData(form);
         fetch(form.action, {
           method: "POST",
           body: formData,
@@ -132,7 +135,7 @@
           .then((response) => response.json())
           .then((data) => {
             const resultDiv = document.getElementById("connect-result");
-            if (data.status === "success") {
+            if (data.status === "success" || data.status === "info") {
               resultDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
               renderStatus("online", data.ssid);
             } else {

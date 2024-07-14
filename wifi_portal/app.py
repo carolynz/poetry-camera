@@ -215,7 +215,7 @@ def index():
 def submit():
     ssid = request.form['ssid']
     password = request.form['password']
-    manual_connect = request.form.get('manual_connect', False)
+    manual_connect = request.form.get('manual_connect')
 
     def hotspot_scanning():
         end_time = time.time() + 120  # Run for 2 minutes

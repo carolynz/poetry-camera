@@ -355,5 +355,43 @@ def footer():
     return jsonify(res)
 
 
+LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "errors.txt"
+
+
+def get_logs():
+    logs = []
+    try:
+        with open(LOG_FILE_PATH, "r") as f:
+            logs = f.readlines()
+    except FileNotFoundError:
+        pass
+    return logs
+
+
+@app.route("/log")
+def logs():
+    logs = get_logs()
+    return jsonify(logs)
+
+
+PORTAL_LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/errors.txt"
+
+
+def get_portal_logs():
+    logs = []
+    try:
+        with open(PORTAL_LOG_FILE_PATH, "r") as f:
+            logs = f.readlines()
+    except FileNotFoundError:
+        pass
+    return logs
+
+
+@app.route("/log/portal")
+def portal_logs():
+    logs = get_portal_logs()
+    return jsonify(logs)
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=80)

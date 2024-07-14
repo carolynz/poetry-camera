@@ -240,21 +240,22 @@ def index():
     )
 
 
+def hotspot_scanning(ssid, password):
+    end_time = time.time() + 120  # Run for 2 minutes
+    while time.time() < end_time:
+        result = attempt_connect_hotspot(ssid, password)
+        # Log the result, can be changed to more sophisticated logging
+        print(result)
+        if "Success" in result:
+            break
+        time.sleep(5)
+
+
 @app.route("/submit", methods=["POST"])
 def submit():
     ssid = request.form["ssid"]
     password = request.form["password"]
     manual_connect = request.form.get("manual_connect")
-
-    def hotspot_scanning():
-        end_time = time.time() + 120  # Run for 2 minutes
-        while time.time() < end_time:
-            result = attempt_connect_hotspot(ssid, password)
-            # Log the result, can be changed to more sophisticated logging
-            print(result)
-            if "Success" in result:
-                break
-            time.sleep(5)
 
     if manual_connect:
         save_hotspot_config(ssid, password)

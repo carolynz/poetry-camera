@@ -138,6 +138,9 @@
             if (data.status === "success" || data.status === "info") {
               resultDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
               renderStatus("online", data.ssid);
+
+              // if info (scanning), trigger a status refresh
+              if (data.status === "info") updateStatus();
             } else {
               resultDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
               renderStatus("offline");
@@ -166,7 +169,10 @@
             passwordInput.type = this.checked ? "text" : "password";
           });
 
-        // Check connection status again when you click refresh button
+        // Automatically refresh status every 10 seconds
+        setInterval(updateStatus, 10000);
+
+        // Force refresh status when you click refresh button
         document
           .getElementById("refresh-status-button")
           .addEventListener("click", updateStatus);

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <title>Poetry Camera Logs</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Poetry Camera Logs</h1>
+
+      <!-- current connection status -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Logs</h2>
+        </div>
+        <div id="logs-section">
+          <!-- take logs array and render it nicely -->
+          {% for log in logs %}
+          <p>{{ log }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const logs = "{{ logs }}";
+
+    function ansiToHtml(log) {
+      // Regular expressions for ANSI escape codes
+      const ansiPattern = /\u001b\[(\d+)(;\d+)*m/g;
+      const ansiMap = {
+        0: "log-default", // Reset / Normal
+        1: "font-weight: bold", // Bold or increased intensity
+        33: "color: orange", // Yellow
+        34: "color: blue", // Blue
+        37: "color: white", // White
+        // Add more mappings as needed
+      };
+
+      return log
+        .replace(ansiPattern, (_, code) => {
+          const classes = code
+            .split(";")
+            .map((c) => ansiMap[c] || "")
+            .join(" ");
+          return `</span><span style="${classes}">`;
+        })
+        .replace(/^/, '<span class="log-default">')
+        .replace(/$/, "</span>");
+    }
+
+    function renderLogs() {
+      const logsSection = document.getElementById("logs-section");
+      logs.forEach((log) => {
+        const p = document.createElement("p");
+        p.innerHTML = ansiToHtml(log);
+        logsSection.appendChild(p);
+      });
+    }
+
+    // Render logs on page load
+    renderLogs();
+  </script>
+</html>

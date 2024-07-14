@@ -174,3 +174,21 @@ input[type="submit"] {
 #version-info {
   text-align: center;
 }
+
+/* Add some basic styling for log messages */
+#logs-section p {
+  white-space: pre-wrap; /* Ensure logs keep their formatting */
+  margin: 0.5em 0;
+}
+.log-warn {
+  color: orange;
+}
+.log-info {
+  color: blue;
+}
+.log-error {
+  color: red;
+}
+.log-default {
+  color: black;
+}

@@ -384,13 +384,14 @@ def get_portal_logs():
             logs = f.readlines()
     except FileNotFoundError:
         pass
-    return logs
+
+    return render_template("logs.html", logs=logs)
 
 
 @app.route("/log/portal")
 def portal_logs():
     logs = get_portal_logs()
-    return jsonify(logs)
+    return render_template("logs.html", logs=logs)
 
 
 if __name__ == "__main__":

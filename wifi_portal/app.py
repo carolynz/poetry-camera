@@ -384,8 +384,7 @@ def get_portal_logs():
             logs = f.readlines()
     except FileNotFoundError:
         pass
-
-    return render_template("logs.html", logs=logs)
+    return logs
 
 
 @app.route("/log/portal")

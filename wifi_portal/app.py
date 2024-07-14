@@ -14,7 +14,7 @@ import os
 
 from flask import Flask, request, render_template, jsonify, url_for
 
-POETRY_CAMERA_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
+POETRY_CAMERA_DIRECTORY = "/home/mrf/poetry-camera/"
 
 try:
     os.chdir(POETRY_CAMERA_DIRECTORY)
@@ -75,9 +75,7 @@ version_info = f"""System last updated: {commit_date}\nVersion: {
     commit_hash}\nBranch: {branch_name}"""
 
 # Save the commit hash to a file (current directory, named current_version.txt)
-SOFTWARE_VERSION_FILE_PATH = (
-    os.path.dirname(os.path.dirname(os.path.abspath(__name__))) + "/current_version.txt"
-)
+SOFTWARE_VERSION_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/current_version.txt"
 
 with open(SOFTWARE_VERSION_FILE_PATH, "w") as version_file:
     version_file.write(version_info)
@@ -98,10 +96,8 @@ app = Flask(__name__)
 WIFI_DEVICE = "wlan1"
 
 
-config_file = (
-    os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
-    + "/wifi_portal/hotspot_config.json"
-)
+config_file = POETRY_CAMERA_DIRECTORY + "wifi_portal/hotspot_config.json"
+
 
 # get code version info we checked upon startup
 

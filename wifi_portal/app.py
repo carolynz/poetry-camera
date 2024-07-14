@@ -83,10 +83,12 @@ app = Flask(__name__)
 WIFI_DEVICE = "wlan1"
 
 
-config_file = POETRY_CAMERA_DIRECTORY + "wifi_portal/hotspot_config.json"
-
+config_file = os.path.dirname(os.path.dirname(
+    os.path.abspath(__name__))) + "/wifi_portal/hotspot_config.json"
 
 # get code version info we checked upon startup
+
+
 def get_stored_version():
     try:
         with open(SOFTWARE_VERSION_FILE_PATH, 'r') as version_file:

@@ -14,19 +14,14 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="title">Poetry Camera Logs</h1>
+      <h1 class="title">Poetry Camera</h1>
 
       <!-- current connection status -->
       <div class="section">
         <div class="section-header">
-          <h2>Logs</h2>
+          <h2>{{ type }} Logs</h2>
         </div>
-        <div id="logs-section">
-          <!-- take logs array and render it nicely -->
-          {% for log in logs %}
-          <p>{{ log }}</p>
-          {% endfor %}
-        </div>
+        <div id="logs-section"></div>
       </div>
     </div>
   </body>

@@ -111,8 +111,12 @@ def get_stored_footer():
 
 def save_footer(footer):
     device_settings = {"footer": footer}
-    with open(device_settings_file, "w") as f:
-        json.dump(device_settings, f)
+    try:
+        with open(device_settings_file, "w") as f:
+            json.dump(device_settings, f)
+        return {"status": "success", "message": "Footer saved."}
+    except Exception as e:
+        return {"status": "error", "message": f"Error saving footer: {e}"}
 
 
 config_file = POETRY_CAMERA_DIRECTORY + "wifi_portal/hotspot_config.json"
@@ -347,8 +351,8 @@ def status():
 @app.route("/footer", methods=["POST"])
 def footer():
     footer = request.form["footer"]
-    save_footer(footer)
-    return jsonify({"status": "success", "message": "Footer saved."})
+    res = save_footer(footer)
+    return jsonify(res)
 
 
 if __name__ == "__main__":

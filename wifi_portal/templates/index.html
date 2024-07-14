@@ -69,6 +69,19 @@
         <p id="connect-result"></p>
       </div>
 
+      <!-- footer text -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Footer text</h2>
+        </div>
+        <form id="footer-form">
+          <label for="footer">Footer text:</label>
+          <textarea name="footer" id="footer" rows="5" cols="50"></textarea>
+          <input type="submit" value="Save" class="button button-primary" />
+        </form>
+        <p id="footer-result">{{footer}}</p>
+      </div>
+
       <!-- version info -->
       <div id="version-info">
         <p>{{ version }}</p>
@@ -156,10 +169,45 @@
           });
       }
 
+      // Function to handle form submission for footer text
+      function handleFooterFormSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const submitButton = form.querySelector("input[type='submit']");
+        submitButton.value = "Saving...";
+        submitButton.classList.add("loading");
+        const formData = new FormData(form);
+
+        fetch("/footer", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const resultDiv = document.getElementById("footer-result");
+            if (data.status === "success") {
+              resultDiv.innerHTML = `<p style="color: green;">${data.message}</p>`;
+            } else {
+              resultDiv.innerHTML = `<p style="color: red;">${data.message}</p>`;
+            }
+            submitButton.value = "Save";
+            submitButton.classList.remove("loading");
+          })
+          .catch((error) => {
+            const resultDiv = document.getElementById("footer-result");
+            resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            submitButton.value = "Save";
+            submitButton.classList.remove("loading");
+          });
+      }
+
       // call the functions when DOM is loaded
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("wifi-form");
         form.addEventListener("submit", handleFormSubmit);
+
+        const footerForm = document.getElementById("footer-form");
+        footerForm.addEventListener("submit", handleFooterFormSubmit);
 
         // Show/hide password toggle for password field
         document

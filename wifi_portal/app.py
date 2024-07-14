@@ -96,6 +96,25 @@ app = Flask(__name__)
 WIFI_DEVICE = "wlan1"
 
 
+# load/save for footer text
+
+device_settings_file = POETRY_CAMERA_DIRECTORY + "device_settings.json"
+
+
+def get_stored_footer():
+    try:
+        with open(device_settings_file, "r") as f:
+            return json.load(f).get("footer", None)
+    except FileNotFoundError:
+        return {}
+
+
+def save_footer(footer):
+    device_settings = {"footer": footer}
+    with open(device_settings_file, "w") as f:
+        json.dump(device_settings, f)
+
+
 config_file = POETRY_CAMERA_DIRECTORY + "wifi_portal/hotspot_config.json"
 
 
@@ -227,6 +246,9 @@ def index():
     loading_icon = url_for("static", filename="icon/loading.svg")
     refresh_icon = url_for("static", filename="icon/refresh.svg")
 
+    # Load footer text
+    footer = get_stored_footer()
+
     return render_template(
         "index.html",
         ssids_list=unique_ssids_list,
@@ -237,6 +259,7 @@ def index():
         offline_icon=offline_icon,
         loading_icon=loading_icon,
         refresh_icon=refresh_icon,
+        footer=footer,
     )
 
 
@@ -318,6 +341,14 @@ def submit():
 def status():
     internet_status, ssid = get_network_status()
     return jsonify({"status": internet_status, "ssid": ssid})
+
+
+# footer text
+@app.route("/footer", methods=["POST"])
+def footer():
+    footer = request.form["footer"]
+    save_footer(footer)
+    return jsonify({"status": "success", "message": "Footer saved."})
 
 
 if __name__ == "__main__":

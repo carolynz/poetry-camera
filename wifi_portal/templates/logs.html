@@ -26,7 +26,14 @@
     </div>
   </body>
   <script>
-    const logs = JSON.parse(`{{ logs | tojson }}`);
+    const logs = `{{ logs | tojson }}`;
+
+    // replace all \ with \\ to escape them in JSON
+    const plogs = JSON.parse(
+      logs.replaceAll(/\u001b/g, "\\\\u001b").replaceAll("\n", "")
+    );
+
+    // sanitize control characters
 
     function ansiToHtml(log) {
       // Regular expressions for ANSI escape codes
@@ -54,7 +61,7 @@
 
     function renderLogs() {
       const logsSection = document.getElementById("logs-section");
-      logs.forEach((log) => {
+      plogs.forEach((log) => {
         const p = document.createElement("p");
         p.innerHTML = ansiToHtml(log);
         logsSection.appendChild(p);

@@ -44,7 +44,7 @@
         <div class="section-header">
           <h2>Connect to a WiFi network</h2>
         </div>
-        <form id="wifi-form" method="post" action="/submit">
+        <form id="wifi-form">
           <label for="ssid">Choose a WiFi network:</label>
           <input
             list="ssids"
@@ -122,13 +122,13 @@
         const formData = new FormData(form);
 
         // if the ssid is not in the list, it's a manual connection, add manual_connect=true to the form data
-        const ssidList = JSON.parse("{{ ssids_list | tojson }}");
+        const ssidList = JSON.parse(`{{ ssids_list | tojson }}`);
         formData.append(
           "manual_connect",
           ssidList.includes(form.ssid.value) ? false : true
         );
 
-        fetch(form.action, {
+        fetch("/submit", {
           method: "POST",
           body: formData,
         })

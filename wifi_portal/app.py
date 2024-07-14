@@ -361,7 +361,7 @@ LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "errors.txt"
 def get_logs():
     logs = []
     try:
-        with open(LOG_FILE_PATH, "r") as f:
+        with open(LOG_FILE_PATH, "r", encoding="utf-8") as f:
             logs = f.readlines()
     except FileNotFoundError:
         pass
@@ -380,7 +380,7 @@ PORTAL_LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/errors.txt"
 def get_portal_logs():
     logs = []
     try:
-        with open(PORTAL_LOG_FILE_PATH, "r") as f:
+        with open(PORTAL_LOG_FILE_PATH, "r", encoding="utf-8") as f:
             logs = f.readlines()
     except FileNotFoundError:
         pass

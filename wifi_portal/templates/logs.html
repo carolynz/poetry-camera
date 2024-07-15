@@ -30,7 +30,13 @@
 
     // replace all \ with \\ to escape them in JSON
     const plogs = JSON.parse(
-      logs.replaceAll(/\u001b/g, "\\\\u001b").replaceAll("\n", "")
+      logs
+        .replace(/"(.*?)"/g, function (_, p) {
+          return '"' + p.replace(/"/g, '\\"') + '"';
+        })
+        .replace(/[\u0000-\u001F\u007F-\u009F]/g, (c) => {
+          return "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4);
+        })
     );
 
     // sanitize control characters

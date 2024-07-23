@@ -19,7 +19,11 @@
       <!-- current connection status -->
       <div class="section">
         <div class="section-header">
-          <h2>{{ type }} Logs</h2>
+          <div>
+            <h2>{{ type }} Logs</h2>
+            <p>(Newest logs at the top)</p>
+          </div>
+          <button id="download-button">Download logs</button>
         </div>
         <div id="logs-section"></div>
       </div>
@@ -28,7 +32,6 @@
   <script>
     const logs = `{{ logs | tojson }}`;
 
-    // replace all \ with \\ to escape them in JSON
     const plogs = JSON.parse(
       logs
         .replace(/"(.*?)"/g, function (_, p) {
@@ -39,7 +42,12 @@
         })
     );
 
-    // sanitize control characters
+    // reverse the array so the newest logs are at the top
+    plogs.reverse();
+
+    // limit the number of logs to 250
+    const LOG_LENGTH = 250; // maximum number of logs to display
+    plogs = plogs.slice(0, LOG_LENGTH);
 
     function ansiToHtml(log) {
       // Regular expressions for ANSI escape codes
@@ -76,5 +84,17 @@
 
     // Render logs on page load
     renderLogs();
+
+    // Download logs button
+    const downloadButton = document.getElementById("download-button");
+    downloadButton.addEventListener("click", function () {
+      const logsText = logs.join("\n");
+      const data = new Blob([logsText], { type: "text/plain" });
+      const url = URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `poetry-camera-${type}-logs.txt`;
+      link.click();
+    });
   </script>
 </html>

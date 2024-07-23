@@ -33,7 +33,7 @@
     const logs = `{{ logs | tojson }}`;
   </script>
   <script>
-    const plogs = JSON.parse(
+    let plogs = JSON.parse(
       logs
         .replace(/\n|\t|""",/g, "")
         .replace(/"(.*?)"/g, (_, p) => {

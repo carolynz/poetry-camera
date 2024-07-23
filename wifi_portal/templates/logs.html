@@ -31,7 +31,8 @@
   </body>
   <script>
     const logs = `{{ logs | tojson }}`;
-
+  </script>
+  <script>
     const plogs = JSON.parse(
       logs
         .replace(/"(.*?)"/g, function (_, p) {
@@ -84,12 +85,12 @@
 
     // Render logs on page load
     renderLogs();
-
+  </script>
+  <script>
     // Download logs button
     const downloadButton = document.getElementById("download-button");
     downloadButton.addEventListener("click", function () {
-      const logsText = logs.join("\n");
-      const data = new Blob([logsText], { type: "text/plain" });
+      const data = new Blob([logs], { type: "text/plain" });
       const url = URL.createObjectURL(data);
       const link = document.createElement("a");
       link.href = url;

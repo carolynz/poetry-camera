@@ -35,13 +35,16 @@
   <script>
     const plogs = JSON.parse(
       logs
-        .replace(/"(.*?)"/g, function (_, p) {
+        .replace(/\n|\t|""",/g, "")
+        .replace(/"(.*?)"/g, (_, p) => {
           return '"' + p.replace(/"/g, '\\"') + '"';
         })
+        // I am not smart enough to determine why the above regex isn't enough
+        .replace(/"GET.*?1.1"/g, (match) => match.replace(/"/g, '\\"'))
         .replace(/[\u0000-\u001F\u007F-\u009F]/g, (c) => {
           return "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4);
         })
-    );
+    ).filter(Boolean);
 
     // reverse the array so the newest logs are at the top
     plogs.reverse();

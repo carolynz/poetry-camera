@@ -100,7 +100,7 @@ h2 {
 .section-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   margin-bottom: 16px;
 }
 
@@ -222,4 +222,13 @@ input[type="submit"] {
 }
 .log-default {
   color: black;
+}
+
+#download-button {
+  margin-top: 0.25em;
+}
+
+#download-button:hover {
+  cursor: pointer;
+  color: red;
 }

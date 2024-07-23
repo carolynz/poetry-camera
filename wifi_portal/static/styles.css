@@ -206,6 +206,11 @@ input[type="submit"] {
   white-space: pre-wrap; /* Ensure logs keep their formatting */
   margin: 0.5em 0;
 }
+
+#logs-section > p:nth-of-type(odd) {
+  background: #e0e0e0;
+}
+
 .log-warn {
   color: orange;
 }

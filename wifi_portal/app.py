@@ -371,11 +371,8 @@ def get_logs():
 @app.route("/log")
 def logs():
     logs = get_logs()
-    download_icon = url_for("static", filename="icon/download.svg")
 
-    return render_template(
-        "logs.html", download_icon=download_icon, logs=logs, type="Camera"
-    )
+    return render_template("logs.html", logs=logs, type="Camera")
 
 
 PORTAL_LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/errors.txt"
@@ -394,11 +391,8 @@ def get_portal_logs():
 @app.route("/log/portal")
 def portal_logs():
     logs = get_portal_logs()
-    download_icon = url_for("static", filename="icon/download.svg")
 
-    return render_template(
-        "logs.html", download_icon=download_icon, logs=logs, type="WiFiPortal"
-    )
+    return render_template("logs.html", logs=logs, type="WiFiPortal")
 
 
 if __name__ == "__main__":

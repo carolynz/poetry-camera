@@ -44,7 +44,7 @@ h6 {
  * purchase it here: https://verycoolstudio.com/typefaces/gooper */
 @font-face {
   font-family: "Gooper SemiCondensed";
-  src: url("fonts/GooperSemiCondensed7-SemiBold.woff2") format("woff2");
+  src: url("/static/fonts/GooperSemiCondensed7-SemiBold.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }

@@ -40,20 +40,34 @@ h6 {
 
 /* End of CSS reset */
 
+/* This is a paid font, so we're not including it in the repo, but you can 
+ * purchase it here: https://verycoolstudio.com/typefaces/gooper */
+@font-face {
+  font-family: "Gooper SemiCondensed";
+  src: url("fonts/GooperSemiCondensed7-SemiBold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   font-family: "Arial", sans-serif;
-  margin: 0;
   padding: 0;
   background-color: #f4f4f4;
   color: #333;
 }
 
 .container {
-  width: 90%;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
+  padding: 1.5em;
 }
 
 h1,
@@ -61,12 +75,19 @@ h2 {
   color: #333;
   text-align: center;
   font-family: Arial, sans-serif;
-  margin: 0;
 }
 
 .title {
-  margin-top: 1em;
   color: #f00;
+}
+
+.log-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 5px 0 15px rgba(0, 0, 0, 0.1);
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .section {
@@ -176,6 +197,11 @@ input[type="submit"] {
 }
 
 /* Add some basic styling for log messages */
+#logs-section {
+  overflow: auto;
+  height: 100%;
+}
+
 #logs-section p {
   white-space: pre-wrap; /* Ensure logs keep their formatting */
   margin: 0.5em 0;

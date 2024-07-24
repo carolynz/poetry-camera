@@ -16,11 +16,6 @@ from flask import Flask, request, render_template, jsonify, url_for
 
 POETRY_CAMERA_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 
-try:
-    os.chdir(POETRY_CAMERA_DIRECTORY)
-except Exception as e:
-    print(f"Failed to change directory: {e}")
-
 
 # Get the git commit hash to display on portal -- for beta/debugging
 def get_git_revision_hash():

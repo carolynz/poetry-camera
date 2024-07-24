@@ -14,7 +14,7 @@ import os
 
 from flask import Flask, request, render_template, jsonify, url_for
 
-POETRY_CAMERA_DIRECTORY = "/home/mrf/poetry-camera/"
+POETRY_CAMERA_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 
 try:
     os.chdir(POETRY_CAMERA_DIRECTORY)
@@ -75,7 +75,9 @@ version_info = f"""System last updated: {commit_date}\nVersion: {
     commit_hash}\nBranch: {branch_name}"""
 
 # Save the commit hash to a file (current directory, named current_version.txt)
-SOFTWARE_VERSION_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/current_version.txt"
+SOFTWARE_VERSION_FILE_PATH = (
+    POETRY_CAMERA_DIRECTORY + "/wifi_portal/current_version.txt"
+)
 
 with open(SOFTWARE_VERSION_FILE_PATH, "w") as version_file:
     version_file.write(version_info)
@@ -98,7 +100,7 @@ WIFI_DEVICE = "wlan1"
 
 # load/save for footer text
 
-device_settings_file = POETRY_CAMERA_DIRECTORY + "device_settings.json"
+device_settings_file = POETRY_CAMERA_DIRECTORY + "/device_settings.json"
 
 
 def get_stored_footer():
@@ -119,7 +121,7 @@ def save_footer(footer):
         return {"status": "error", "message": f"Error saving footer: {e}"}
 
 
-config_file = POETRY_CAMERA_DIRECTORY + "wifi_portal/hotspot_config.json"
+config_file = POETRY_CAMERA_DIRECTORY + "/wifi_portal/hotspot_config.json"
 
 
 # get code version info we checked upon startup
@@ -355,7 +357,7 @@ def footer():
     return jsonify(res)
 
 
-LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "errors.txt"
+LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "/errors.txt"
 
 
 def get_logs():
@@ -375,7 +377,7 @@ def logs():
     return render_template("logs.html", logs=logs, type="Camera")
 
 
-PORTAL_LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "wifi_portal/errors.txt"
+PORTAL_LOG_FILE_PATH = POETRY_CAMERA_DIRECTORY + "/wifi_portal/errors.txt"
 
 
 def get_portal_logs():
